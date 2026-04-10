@@ -247,7 +247,7 @@ function removeFromWebPanelDir() {
 }
 
 function optionalClientI1Block() {
-	if [[ -n "${SERVER_AWG_I1}" ]]; then
+	if [[ -n "${SERVER_AWG_I1:-}" ]]; then
 		printf '\nI1 = <%s>' "${SERVER_AWG_I1}"
 	fi
 }
@@ -291,7 +291,7 @@ SERVER_AWG_H2=$(safeQuoteParam "${SERVER_AWG_H2}")
 SERVER_AWG_H3=$(safeQuoteParam "${SERVER_AWG_H3}")
 SERVER_AWG_H4=$(safeQuoteParam "${SERVER_AWG_H4}")
 EOF
-	if [[ -n "${SERVER_AWG_I1}" ]]; then
+	if [[ -n "${SERVER_AWG_I1:-}" ]]; then
 		printf 'SERVER_AWG_I1=%s\n' "$(safeQuoteParam "${SERVER_AWG_I1}")" >>"${OUTPUT_FILE}"
 	fi
 	umask "${OLD_UMASK}"
