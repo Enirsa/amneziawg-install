@@ -238,6 +238,7 @@ pub struct ServerParams {
     pub h2: String,
     pub h3: String,
     pub h4: String,
+    pub i1: Option<String>,
 }
 
 /// Parse params file content (KEY='VALUE' format) into [`ServerParams`].
@@ -309,6 +310,7 @@ pub fn parse_params(content: &str) -> Result<ServerParams, CreateClientError> {
         h2: get("SERVER_AWG_H2")?,
         h3: get("SERVER_AWG_H3")?,
         h4: get("SERVER_AWG_H4")?,
+        i1: map.get("SERVER_AWG_I1").cloned().filter(|value| !value.is_empty()),
     };
 
     // Validate server_awg_nic: must be a safe interface name (alphanumeric,
@@ -775,6 +777,11 @@ fn build_client_config(
     dns: &str,
     endpoint: &str,
 ) -> String {
+    let i1_line = params
+        .i1
+        .as_deref()
+        .map(|i1| format!("I1 = <{i1}>\n"))
+        .unwrap_or_default();
     format!(
         "\
 [Interface]
@@ -792,6 +799,7 @@ H1 = {h1}
 H2 = {h2}
 H3 = {h3}
 H4 = {h4}
+{i1_line}
 
 [Peer]
 PublicKey = {server_pub_key}
@@ -809,6 +817,7 @@ AllowedIPs = {allowed_ips}",
         h2 = params.h2,
         h3 = params.h3,
         h4 = params.h4,
+        i1_line = i1_line,
         server_pub_key = params.server_pub_key,
         allowed_ips = params.allowed_ips,
     )
@@ -1284,6 +1293,7 @@ SERVER_AWG_H1='321941292'
 SERVER_AWG_H2='774489227'
 SERVER_AWG_H3='1084244185'
 SERVER_AWG_H4='1837068650'
+SERVER_AWG_I1='test-i1'
 ";
         let params = parse_params(content).unwrap();
         assert_eq!(params.server_pub_ip, "203.0.113.42");
@@ -1297,6 +1307,7 @@ SERVER_AWG_H4='1837068650'
         assert_eq!(params.allowed_ips, "0.0.0.0/0,::/0");
         assert_eq!(params.jc, "8");
         assert_eq!(params.h4, "1837068650");
+        assert_eq!(params.i1.as_deref(), Some("test-i1"));
     }
 
     #[test]
@@ -1330,6 +1341,7 @@ SERVER_AWG_H4=\"11\"
 ";
         let params = parse_params(content).unwrap();
         assert_eq!(params.server_pub_ip, "1.2.3.4");
+        assert_eq!(params.i1, None);
     }
 
     #[test]
@@ -1357,6 +1369,7 @@ SERVER_AWG_H4=11
 ";
         let params = parse_params(content).unwrap();
         assert_eq!(params.server_pub_ip, "1.2.3.4");
+        assert_eq!(params.i1, None);
     }
 
     #[test]
@@ -1665,6 +1678,7 @@ AllowedIPs = 10.66.66.3/32,fd42:0042:0042:0000:0000:0000:0000:0003/128
             h2: "774489227".into(),
             h3: "1084244185".into(),
             h4: "1837068650".into(),
+            i1: Some("test-i1".into()),
         };
         let config = build_client_config(
             &params,
@@ -1679,11 +1693,49 @@ AllowedIPs = 10.66.66.3/32,fd42:0042:0042:0000:0000:0000:0000:0003/128
         assert!(config.contains("Address = 10.66.66.2/32,fd42:42:42::2/128"));
         assert!(config.contains("DNS = 1.1.1.1,1.0.0.1"));
         assert!(config.contains("Jc = 8"));
-        assert!(config.contains("H4 = 1837068650"));
+        assert!(config.contains("H4 = 1837068650\nI1 = <test-i1>"));
         assert!(config.contains("PublicKey = SVR_PUB="));
         assert!(config.contains("PresharedKey = PSK_KEY="));
         assert!(config.contains("Endpoint = 1.2.3.4:51820"));
         assert!(config.contains("AllowedIPs = 0.0.0.0/0,::/0"));
+    }
+
+    #[test]
+    fn build_client_config_omits_i1_when_missing() {
+        let params = ServerParams {
+            server_pub_ip: "1.2.3.4".into(),
+            server_awg_nic: "awg0".into(),
+            server_awg_ipv4: "10.66.66.1".into(),
+            server_awg_ipv6: "fd42:42:42::1".into(),
+            server_port: "51820".into(),
+            server_pub_key: "SVR_PUB=".into(),
+            client_dns_1: "1.1.1.1".into(),
+            client_dns_2: "1.0.0.1".into(),
+            allowed_ips: "0.0.0.0/0,::/0".into(),
+            jc: "8".into(),
+            jmin: "50".into(),
+            jmax: "1000".into(),
+            s1: "107".into(),
+            s2: "105".into(),
+            s3: "62".into(),
+            s4: "95".into(),
+            h1: "321941292".into(),
+            h2: "774489227".into(),
+            h3: "1084244185".into(),
+            h4: "1837068650".into(),
+            i1: None,
+        };
+        let config = build_client_config(
+            &params,
+            "PRIV_KEY=",
+            "10.66.66.2",
+            "fd42:42:42::2",
+            "PSK_KEY=",
+            "1.1.1.1,1.0.0.1",
+            "1.2.3.4:51820",
+        );
+        assert!(config.contains("H4 = 1837068650\n\n[Peer]"));
+        assert!(!config.contains("\nI1 = <"));
     }
 
     // ── IP override / resolve_client_ips tests ─────────────────────────
