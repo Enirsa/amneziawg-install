@@ -13,7 +13,7 @@ The installer builds from source by default. When you run it from a repository
 checkout, it auto-detects the source directory for you. It lives at the repository root next to `amneziawg-install.sh`:
 
 ```bash
-git clone https://github.com/wiresock/amneziawg-install.git
+git clone https://github.com/Enirsa/amneziawg-install.git
 cd amneziawg-install
 
 # 1. Install AmneziaWG (if not already done)
@@ -74,7 +74,7 @@ To build manually:
 
 ```bash
 # Clone the repo (or download a release tarball)
-git clone https://github.com/wiresock/amneziawg-install.git
+git clone https://github.com/Enirsa/amneziawg-install.git
 cd amneziawg-install/amneziawg-web
 
 # Build the release binary

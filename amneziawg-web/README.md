@@ -3,7 +3,7 @@
 A self-hosted web panel for **visibility and management** of
 [AmneziaWG (AWG)](https://github.com/amnezia-vpn/amneziawg-linux-kernel-module)
 installations managed via the
-[amneziawg-install](https://github.com/wiresock/amneziawg-install) script.
+[amneziawg-install](https://github.com/Enirsa/amneziawg-install) script.
 
 > **Status: v0.1.0** – feature-complete for private self-hosted deployment.
 > Suitable for single-admin home or corporate VPN monitoring behind a reverse proxy.
@@ -107,7 +107,7 @@ The installer lives at the repository root, next to `amneziawg-install.sh`.
 If you run it from a repository checkout, it auto-detects `./amneziawg-web` and builds from source automatically:
 
 ```bash
-git clone https://github.com/wiresock/amneziawg-install.git
+git clone https://github.com/Enirsa/amneziawg-install.git
 cd amneziawg-install
 
 # 1. Install AmneziaWG (if not already done)

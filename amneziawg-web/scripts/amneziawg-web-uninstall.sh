@@ -30,7 +30,7 @@
 #   Systemd unit: /etc/systemd/system/amneziawg-web.service
 #   Service user: awg-web
 #
-# https://github.com/wiresock/amneziawg-install
+# https://github.com/Enirsa/amneziawg-install
 
 set -euo pipefail
 

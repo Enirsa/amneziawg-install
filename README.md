@@ -13,7 +13,7 @@ VPN install → (optional) Web panel → Manage clients
 **VPN only (required):**
 
 ```bash
-curl -O https://raw.githubusercontent.com/wiresock/amneziawg-install/main/amneziawg-install.sh
+curl -O https://raw.githubusercontent.com/Enirsa/amneziawg-install/main/amneziawg-install.sh
 chmod +x amneziawg-install.sh
 sudo ./amneziawg-install.sh
 ```
@@ -21,7 +21,7 @@ sudo ./amneziawg-install.sh
 **Add the web panel (optional):**
 
 ```bash
-curl -O https://raw.githubusercontent.com/wiresock/amneziawg-install/main/amneziawg-web.sh
+curl -O https://raw.githubusercontent.com/Enirsa/amneziawg-install/main/amneziawg-web.sh
 chmod +x amneziawg-web.sh
 sudo ./amneziawg-web.sh install
 ```
@@ -76,7 +76,7 @@ sudo ./amneziawg-web.sh install
 Use the **[Quick Start](#-quick-start)** commands above, or clone the repository (best for teams or repeated upgrades):
 
 ```bash
-git clone https://github.com/wiresock/amneziawg-install.git
+git clone https://github.com/Enirsa/amneziawg-install.git
 cd amneziawg-install
 sudo ./amneziawg-install.sh
 sudo ./amneziawg-web.sh install

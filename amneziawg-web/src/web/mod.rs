@@ -1454,7 +1454,10 @@ async fn get_peer_qr(
         Err(resp) => return Ok(with_qr_no_cache(resp)),
     };
 
-    let qr = match qrcode::QrCode::new(content.as_bytes()) {
+    let qr = match qrcode::QrCode::with_error_correction_level(
+        content.as_bytes(),
+        qrcode::EcLevel::L,
+    ) {
         Ok(q) => q,
         Err(_) => {
             return Ok(with_qr_no_cache(

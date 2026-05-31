@@ -18,7 +18,7 @@
 #
 # Dependencies: bash 4+, openssl, systemd, python3 (for Argon2 hash) or argon2 CLI
 #
-# https://github.com/wiresock/amneziawg-install
+# https://github.com/Enirsa/amneziawg-install
 
 set -euo pipefail
 
@@ -228,7 +228,7 @@ Only systemd-based Linux distributions are supported."
 check_awg_binary() {
     if [[ ! -x "/usr/bin/awg" ]]; then
         die "AWG binary not found or not executable at: /usr/bin/awg
-Install AmneziaWG first (https://github.com/wiresock/amneziawg-install)."
+Install AmneziaWG first (https://github.com/Enirsa/amneziawg-install)."
     fi
     info "AWG binary: /usr/bin/awg"
 }

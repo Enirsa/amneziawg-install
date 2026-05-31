@@ -7,7 +7,7 @@ Thank you for your interest in contributing to `amneziawg-web`.
 ## Getting started
 
 ```bash
-git clone https://github.com/wiresock/amneziawg-install.git
+git clone https://github.com/Enirsa/amneziawg-install.git
 cd amneziawg-install/amneziawg-web
 
 # Build

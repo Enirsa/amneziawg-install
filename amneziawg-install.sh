@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AmneziaWG server installer
-# https://github.com/wiresock/amneziawg-install
+# https://github.com/Enirsa/amneziawg-install
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -1184,7 +1184,7 @@ function installQuestions() {
 	SERVER_AWG_S4=""
 	SERVER_AWG_I1=""
 
-	echo "AmneziaWG server installer (https://github.com/wiresock/amneziawg-install)"
+	echo "AmneziaWG server installer (https://github.com/Enirsa/amneziawg-install)"
 	echo ""
 	echo "I need to ask you a few questions before starting the setup."
 	echo "You can keep the default options and just press enter if you are ok with them."
@@ -3115,7 +3115,7 @@ function loadParams() {
 
 function manageMenu() {
 	local MENU_OPTION=""
-	echo "AmneziaWG server installer (https://github.com/wiresock/amneziawg-install)"
+	echo "AmneziaWG server installer (https://github.com/Enirsa/amneziawg-install)"
 	echo ""
 	echo "It looks like AmneziaWG is already installed."
 	echo ""
